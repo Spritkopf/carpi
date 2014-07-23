@@ -1,0 +1,5 @@
+colors.txt
+
+Actionbar background: #e4e4e4
+Tab Background #d6d6d6
+popup menu: #f2f2f2

@@ -1,0 +1,64 @@
+#:kivy 1.8.0
+#:import ListItem listitem.ListItem
+<NavDrawer>:
+	panel: panel
+	outside:outside
+	size_hint_y: None
+	height: app.root.height - app.root.bar.height
+	
+	GridLayout:
+		id: panel
+		cols: 1
+		row_force_default: True
+		row_default_height:50
+		col_default_width: 250
+		width:250
+		x: -250
+		size_hint_x: None
+
+		canvas:
+			Color:
+				rgb: (.9,.9,.9)
+			Rectangle:
+				size: self.size
+				pos: self.pos
+
+		ListItem:
+			text: 'Music'
+			icon: 'theme/action_headphones.png'
+			background_normal: (.9,.9,.9)
+			on_touch_up: self.collide_point(*args[1].pos) and app.change_screen('Music')
+			icon_visible: True
+		ListItem:
+			text: 'Audiobooks'
+			icon: 'theme/book.png'
+			background_normal: (.9,.9,.9)
+			on_touch_up: self.collide_point(*args[1].pos) and app.change_screen('Audiobooks')
+			icon_visible: True
+		ListItem:
+			text: 'Settings'
+			icon: 'theme/action_settings.png'
+			background_normal: (.9,.9,.9)
+			on_touch_up: self.collide_point(*args[1].pos) and app.open_settings()
+			icon_visible: True
+		ListItem:
+			text: 'Shutdown'
+			icon: 'theme/action_off.png'
+			background_normal: (.9,.9,.9)
+			on_touch_up: self.collide_point(*args[1].pos) and app.stop()
+			icon_visible: True
+
+	Widget:
+		id: outside
+		size_hint: (None,1)
+		opacity: 1
+		x: panel.x + panel.width
+		width: root.width
+		on_touch_up: self.collide_point(*args[1].pos) and root.close()
+
+		canvas:
+			Color:
+				rgba: (0,0,0,.7)
+			Rectangle:
+				size: self.size
+				pos: self.pos

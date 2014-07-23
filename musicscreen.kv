@@ -1,0 +1,78 @@
+#:kivy 1.8.0
+
+<MusicScreen@Screen>:
+	name: 'Music'
+	songlist: songlist
+	songlayout: songlayout
+	cover: ''
+	on_enter: self.init_actionbar()
+	BoxLayout:
+		RelativeLayout:
+			size_hint_x: .5
+
+			Image:
+				id: cover
+				size_hint: (None,None)
+				size: (150,150)
+				#x: root.width/4 - self.width/2
+				#y: root.height - self.height
+				pos: (root.width/4 - self.width/2,root.height - self.height*1.25)
+				source: root.cover if root.cover != '' else 'img/no_cover.png'
+
+			Label:
+				size_hint: (None,None)
+				text: app.root.player.title
+				font_name: './fonts/Roboto-Bold.ttf'
+				font_size: '18sp'
+				text_size: (300,60)
+				color: (0,0,0,1)
+				x: root.width/4 -self.width/2
+				y: cover.y - 70
+				halign: 'center'
+			Label:
+				size_hint: (None,None)
+				text: app.root.player.album
+				font_name: './fonts/Roboto-Thin.ttf'
+				font_size: '18sp'
+				text_size: (300,60)
+				color: (0,0,0,1)
+				x: root.width/4 -self.width/2
+				y: cover.y - 120
+				halign: 'center'
+			Label:
+				size_hint: (None,None)
+				text: app.root.player.artist
+				font_name: './fonts/Roboto-Thin.ttf'
+				font_size: '18sp'
+				text_size: (300,60)
+				color: (0,0,0,1)
+				x: root.width/4 -self.width/2
+				y: cover.y - 170
+				halign: 'center'
+		RelativeLayout:
+			size_hint: (.5,1)
+			ScrollView
+				id: songlist
+				scroll_timeout: 100
+				size_hint: (1,None)
+				height: root.height
+				pos: (0,root.height - self.height)
+				canvas.before:
+					Color:
+						rgb: .9, .9, .9
+					Rectangle:
+						size: self.size
+						pos: self.pos
+
+				GridLayout:
+					id: songlayout
+					cols: 1
+					spacing:6
+					padding:10
+					row_force_default: True
+					row_default_height: 50
+					col_default_width:songlist.width-2*self.padding[0]
+					height: self.minimum_height
+
+					size_hint: (None,None)
+

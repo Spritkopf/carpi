@@ -1,0 +1,102 @@
+#:kivy 1.8.0
+#:import ListItem listitem.ListItem
+
+
+<NavigationDrawer>:
+	panel: panel
+	outside: outside
+	size_hint_y: None
+	size_hint_x: 1
+	height: app.root.height - app.root.bar.height
+	width: app.root.width
+
+	
+
+	# GridLayout:
+	# 	size_hint_x: None
+	# 	id: panel
+	# 	cols: 1
+	# 	row_force_default: True
+	# 	row_default_height:50
+	# 	col_default_width: 250
+	# 	width: 250
+	# 	x: -250
+	# 	canvas:
+	# 		Color:
+	# 			rgb: (.9,.9,.9)
+	# 		Rectangle:
+	# 			size: self.size
+	# 			pos: self.pos
+
+	# 	ListItem:
+	# 		text: 'HACKE'
+	# 		icon: 'theme/action_headphones.png'
+	# 		background_normal: (.9,.9,.9)
+
+	# 	DrawerItem:
+	# 		text: 'Music'
+	# 		icon: 'theme/action_headphones.png'
+	# 		screen: 'Music'
+
+
+	# 	DrawerItem:
+	# 		text: 'Audiobooks'
+	# 		icon: 'theme/book.png'
+
+	# 	DrawerItem:
+	# 		text: 'Settings'
+	# 		icon: 'theme/action_settings.png'
+	# 		screen: 'Settings'
+
+	# 	DrawerItem:
+	# 		text: "Blablabla"
+	# Widget:
+	# 	id: outside
+	# 	size_hint: (None,1)
+	# 	opacity: 0
+	# 	x: panel.x + panel.width
+	# 	width: root.width
+
+	# 	canvas:
+	# 		Color:
+	# 			rgba: (0,0,0,.7)
+	# 		Rectangle:
+	# 			size: self.size
+	# 			pos: self.pos
+
+			
+
+	
+
+# <DrawerItem>:
+# 	size_hint: (None,None)
+# 	orientation: 'horizontal'
+# 	text: ''
+# 	icon: None
+# 	canvas:
+# 		Color:
+# 			rgb: (.9,.9,.9)
+# 		Rectangle:
+# 			size: self.size
+# 			pos: self.pos
+# 		Color:
+# 			rgb: (.7,.7,.7)
+# 		Line:
+# 			points:[self.x,self.y,self.x+self.width,self.y]
+# 			width:1
+# 	Widget:
+# 		size_hint_x: .1
+# 	Image:
+# 		size_hint_x: .2
+# 		source: root.icon
+# 		opacity: 1 if root.icon else 0
+# 	Label:
+# 		size_hint_x: .9
+# 		halign: 'left'
+# 		valign: 'middle'
+# 		text_size: (self.width,50)
+# 		font_size: '14sp'
+# 		font_name: './fonts/Roboto-Regular.ttf'
+# 		padding_x: -20
+# 		color: (0,0,0,1)
+# 		text: 'dasasd'

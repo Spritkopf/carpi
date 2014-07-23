@@ -1,0 +1,88 @@
+#:kivy 1.8.0
+
+<AlbumView@Screen>:
+	name: 'AlbumView'
+	artistlist: artistlist
+	albumlist: albumlist
+	on_enter: self.init_actionbar()
+	ArtistList:
+		id: artistlist
+		pos:(0,0)
+		size: (root.width/2 - 10, root.height)
+
+	AlbumList:
+		id: albumlist
+		size: (root.width/2 +10, root.height)
+		pos:(root.width/2+-10,0)
+
+<ArtistList@ScrollView>:
+	artistlayout: artistlayout
+	size_hint: (1,None)
+	canvas.before:
+		Color:
+			rgb: (.9,.9,.9)
+		Rectangle:
+			size: self.size
+			pos: self.pos
+
+	GridLayout:
+		id: artistlayout
+		cols: 1
+		spacing: 0
+		padding: 10
+		row_force_default: True
+		row_default_height: 50
+		col_default_width: 350
+		height: self.minimum_height
+		size_hint: (1,None)
+
+<AlbumList@ScrollView>:
+	albumlayout: albumlayout
+	size_hint: (None,None)
+	canvas.before:
+		Color:
+			rgba: .9, .9, .9,1
+		Rectangle:
+			size: self.size
+			pos: self.pos
+
+	GridLayout:
+		id: albumlayout
+		cols: 1
+		spacing: 15
+		row_force_default: True
+		row_default_height: 120
+		height: self.minimum_height
+		size_hint: (1,None)
+		padding: 10
+
+
+
+<AlbumItem>:
+	orientation: 'horizontal'
+	padding: 10
+	spacing: 30
+	canvas:
+		Color:
+			rgb: (1,1,1)
+		Rectangle:
+			size: self.size
+			pos: self.pos
+		Color:
+			rgb: (.75,.75,.75)
+		Line:
+			points:[self.x,self.y,self.x+self.width,self.y]
+			width:1
+
+	Image:
+		size_hint_x: .3
+		source: 'img/no_cover.png' if not root.cover else root.cover
+	Label:
+		size_hint_x: .7
+		halign: 'left'
+		valign: 'middle'
+		text_size: (self.width,30)
+		color: (.2,.2,.2,1)
+		font_size: '16sp'
+		font_name: './fonts/Roboto-Regular.ttf'
+		text: 'NO_TEXT' if not root.album else root.album

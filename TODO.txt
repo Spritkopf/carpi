@@ -1,0 +1,10 @@
+TODO
+
+
+
+	Mediaprovider: 
+		Artist & Album aus SQLITE -> OK
+
+		Scan media files to sqlite-> ...
+		load album to music player from sqlite ->...
+		usw, JSON ersetzen! ...

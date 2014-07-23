@@ -1,0 +1,22 @@
+[
+    {"type": "title",
+     "title": "CarPi"},
+
+    { "type": "path",
+      "title": "Media Path",
+      "desc": "The root directory of the music collection",
+      "section": "General",
+      "key": "media_path"
+},
+    { "type": "path",
+      "title": "Audiobook Path",
+      "desc": "The root directory of the Audiobook collection",
+      "section": "General",
+      "key": "audiobook_path" },
+
+    { "type": "string",
+      "title": "EQ Preset",
+      "desc": "Active EQ-preset",
+      "section": "Audio",
+      "key": "eq_preset"}
+]

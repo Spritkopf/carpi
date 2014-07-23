@@ -1,0 +1,232 @@
+#:kivy 1.8.0
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import InteractiveProgress interactiveprogress.InteractiveProgress
+#:import Player player.Player
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+FloatLayout:
+    sm: sm
+    bar: bar
+    bottom_bar: bottom_bar
+    progressbar: progress
+    player: player
+    
+    BoxLayout:
+    	orientation: 'vertical'
+        size_hint_y:1
+    	canvas.before:
+    		Color:
+            	rgb: 1, 1, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        
+        ActionBar:
+            id: bar
+            size_hint_y: None
+            height: 40
+
+            ActionView: 
+
+                ActionPrevious:
+                    title: ('' if not app.screen_title else '{}'.format(app.screen_title))
+                    app_icon: 'img/skoda_logo_white.png'
+                    size_hint_x: None
+                    width: 200
+                    color: get_color_from_hex('#FFFFFF33')
+                    font_name: './fonts/Roboto/Roboto-Bold.ttf'
+                    font_size: '30sp'
+                    previous_image: 'theme/ab_drawer.png'
+                    on_release: app.open_drawer()
+
+                ActionSpacer:
+
+                ActionButton:
+                    text: 'test()'
+                    width: 200
+                    on_release: app.test()
+
+        
+        RelativeLayout:
+
+            ScreenManager:
+                id: sm
+                transition:SlideTransition(duration=0.3)
+
+            Widget:
+                canvas:
+                    Color:
+                        rgba: (0, 0, 0,.5)
+                    Line:
+                        width: 1
+                        points: (0,self.y,self.width,self.y)
+                    Color:
+                        rgba: (0, 0, 0,.4)
+                    Line:
+                        width: 1
+                        points: (0,self.y-1,self.width,self.y-1)
+                    Color:
+                        rgba: (0, 0, 0,.3)
+                    Line:
+                        width: 1
+                        points: (0,self.y-2,self.width,self.y-2)
+                    Color:
+                        rgba: (0, 0, 0,.2)
+                    Line:
+                        width: 1
+                        points: (0,self.y-3,self.width,self.y-3)
+                    Color:
+                        rgba: (0, 0, 0,.1)
+                    Line:
+                        width: 1
+                        points: (0,self.y-4,self.width,self.y-4)
+                    Color:
+                        rgba: (0, 0, 0,.1)
+                    Line:
+                        width: 1
+                        points: (0,self.y-5,self.width,self.y-5)
+                size_hint: (1,None)
+                height:1
+                y: self.parent.height
+                
+
+
+        FloatLayout:
+            id: bottom_bar
+            text: "bottom_bar"
+            height: 60
+            size_hint: (1,None)
+            canvas.before:
+                Color:
+                    rgba: (1,1,1,0)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                Color:
+                    rgba: (0,0,0,.4)
+                Line:
+                    points: (0,61,self.width,61)
+                    width: 1
+                Color:
+                    rgba: (0,0,0,.3)
+                Line:
+                    points: (0,62,self.width,62)
+                    width: 1
+                Color:
+                    rgba: (0,0,0,.2)
+                Line:
+                    points: (0,63,self.width,63)
+                    width: 1
+                Color:
+                    rgba: (0,0,0,.1)
+                Line:
+                    points: (0,64,self.width,64)
+                    width: 1
+                Color:
+                    rgba: (0,0,0,0)
+                Line:
+                    points: (0,65,self.width,65)
+                    width: 1
+
+            Player:
+                id: player
+                size: (300,60)
+                
+            ActionButton:
+                size_hint_x: None
+                size: (40,50)
+                x: playButton.x - self.width - playButton.width*1.5
+                icon: 'theme/action_previous.png'
+                opacity: 1 if player.mode=='audiobook' else 0
+                disabled: False if player.mode=='audiobook' else True
+                on_release: player.seek_relative(-30)
+
+            ActionButton:
+                size_hint_x: None
+                size: (40,50)
+                x: playButton.x - self.width - playButton.width/2
+                icon: 'theme/action_previous.png'
+                on_release: app.prev_file()
+
+            ToggleButton:
+                id: playButton
+                size_hint: (None,None)
+                allow_stretch: False
+                y: bottom_bar.height/2 - self.height/2
+                size: (55,55)
+                x: root.width/2
+                background_normal: 'theme/action_play_55.png'
+                background_down: 'theme/action_pause.png'
+                on_release: player.togglePlayPause(self.state)
+                state: 'down' if player.status=='play' else 'normal'
+
+
+            ActionButton:
+                size_hint_x: None
+                size: (40,50)
+                x: playButton.x + playButton.width*1.5
+                icon: 'theme/action_next.png'
+                on_release: app.next_file()
+
+            ToggleButton:
+                size_hint: (None,None)
+                size: (32,32)
+                allow_stretch: True
+                x: root.width - self.width*4
+                y: bottom_bar.height/2 - self.height/2
+                background_normal: 'theme/action_shuffle.png'
+                background_down: 'theme/action_shuffle_active.png'
+                opacity: 1 if player.mode=='Music' else 0
+                disabled: False if player.mode=='Music' else True
+                on_release: player.toggleShuffle(self.state)
+
+            ToggleButton:
+                size_hint: (None,None)
+                size: (32,32)
+                allow_stretch: True
+                x: root.width - self.width*2.5
+                y: bottom_bar.height/2 - self.height/2
+                background_normal: 'theme/action_volume_on_small.png'
+                background_down: 'theme/action_volume_muted_small.png'
+ 
+            ActionButton:
+                size_hint_x: None
+                size: (40,50)
+                x: root.width - self.width - 5
+                icon: 'theme/action_eq.png'
+                on_release: app.change_screen('Equalizer')
+
+            InteractiveProgress:
+                id:progress
+                size_hint_y: None
+                height: 30
+                offset: 3
+                y: bottom_bar.height - self.height/2 + self.offset
+
+            Label:
+                text: '%02d:%02d' % (0,0)
+                font_name: './fonts/Roboto-Regular.ttf'
+                font_size: '14sp'
+                size_hint: (None,None)
+                color: (0,0,0,1)
+                height: 20
+                text_size: (self.width,self.height)
+                x:10
+                y:60
+                halign: 'left'
+                valign:'middle'
+            Label:
+                text: '%02d:%02d' % (player.length/60,player.length%60)
+                font_name: './fonts/Roboto-Regular.ttf'
+                font_size: '14sp'
+                size_hint: (None,None)
+                color: (0,0,0,1)
+                height: 20
+                text_size: (self.width,self.height)
+                x:root.width-self.width-10
+                y:60
+                halign: 'right'
+                valign:'middle'
+
+<ActionSpacer@ActionItem+Widget>:
+    width: 100

@@ -1,0 +1,83 @@
+#:kivy 1.8.0
+#:import CircleProgress circleprogress.CircleProgress
+
+<AudioBookScreen@Screen>
+	name: 'Audiobooks'
+	title: ''
+	author: ''
+	cover: ''
+	#progress_part: 0
+	#part_count: 0
+	circleProgress: circleProgress
+	playOverlay: playOverlay
+	on_enter: self.init_actionbar()
+	BoxLayout:
+		RelativeLayout:
+			size_hint_x: .4
+
+			Image:
+				size_hint: (None,None)
+				size: (250,250)
+				pos_hint: {'center_x':.5, 'center_y':.55}
+				source:'img/no_cover.png' if root.cover == '' else root.cover
+
+		RelativeLayout:
+			size_hint_x: .6
+			Label:
+				size_hint: (None,None)
+				text: root.title
+				font_name: './fonts/Roboto-Bold.ttf'
+				font_size: '22sp'
+				size: (400,60)
+				text_size: self.size
+				color: (0,0,0,1)
+				pos_hint: {'center_x':.5, 'top':.9}
+				halign: 'center'
+
+			Label:
+				size_hint: (None,None)
+				text: root.author
+				font_name: './fonts/Roboto-Thin.ttf'
+				font_size: '20sp'
+				size: (400,60)
+				text_size: self.size
+				color: (0,0,0,1)
+				pos_hint: {'center_x':.5, 'top':.75}
+				halign: 'center'
+			Label:
+				size_hint: (None,None)
+				text: str(root.progress_part)+ '/' + str(root.part_count)
+				font_name: './fonts/Roboto-Thin.ttf'
+				font_size: '18sp'
+				size: (400,30)
+				text_size: self.size
+				color: (0,0,0,1)
+				pos_hint: {'center_x':.5}
+				y: circleProgress.y - self.height
+				halign: 'center'
+
+
+			CircleProgress:
+				id: circleProgress
+				font_size: '16sp'
+				pos_hint: {'center_x':.5, 'center_y':.4}
+				line_color:(.4,.4,.4)
+				value: root.progress
+				radius:50
+
+	Widget:
+		id: playOverlay
+		opacity: .7 if app.root.player.mode=='Music' else 0
+		disabled: False if app.root.player.mode=='Music' else True
+		canvas:
+			Color:
+				rgb: (0,0,0)
+			Rectangle
+				size:self.size
+				pos: self.pos
+
+		Image:
+			size: (300,300)
+			pos: (root.width/2-self.width/2,root.height/2-self.height/2)
+			source: 'atlas://data/images/defaulttheme/player-play-overlay'
+			on_touch_down: self.collide_point(*args[1].pos) and root.startPlayback()
